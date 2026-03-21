@@ -74,7 +74,7 @@ A PM2-inspired CLI for managing Quadlet services. It streamlines `systemctl --us
 
 - **`qctl status`**: Shows current process list and CPU, Memory, Restarts, and Since (uptime) metrics. The **STARTUP** column indicates if the service is set to auto-start (via `WantedBy=`).
 - **`qctl enable | disable <name> [--now]`**: Toggles persistence by commenting/uncommenting `WantedBy=` lines in the `.container` file—necessary because standard `systemctl enable` doesn't apply to Quadlets. `--now` immediately starts or stops the service alongside enabling/disabling them.
-- **`qctl logs <name> [flags]`**: A smart `journalctl` wrapper that defaults to follow (`-f`) and accepts all standard journalctl arguments.
+- **`qctl logs <name> [flags]`**: A `journalctl --user` wrapper that defaults to follow (`-f`) and accepts all standard journalctl arguments.
 - **`qctl start | stop | restart | reload`**: Wraps `systemctl --user start | stop | restart`. `reload` runs `daemon-reload` before restarting.
 
 ### 2. `scripts/caddy-sync-volumes.sh`
