@@ -1,9 +1,9 @@
-# 🤖 PersonalizeForMe.md: The AI Implementation Guardrails
+# PersonalizeForMe: AI Implementation Guardrails
 
 > [!IMPORTANT]
 > This repository is a "system-altering" framework. **NEVER** apply changes blindly. 
 > This document serves as the "Rule of Engagement" for any AI agent helping a user personalize the Omega ControlCentre.
-> To understand what the repository does, read README.md first.
+> To understand what the repository does, read README.md if you haven't already.
 
 ## 🏁 The "Prime Directive"
 1.  **Ask first, implement later.** You are the navigator; the human is the captain. If you are uncertain about a path, a permission, or a service's behavior: **Bail fast and ask.**
@@ -19,8 +19,8 @@ Since this repository was likely cloned as a boilerplate from `benedictjohannes/
 
 1.  **Stop & Ask** how the user would like proceed with the ties to the upstream boilerplate. Offer choices:
     - Start a new branch.
-    - Start a fresh Git history. 
-    - Change remote origin
+    - Start a fresh Git repository (`rm -rf .git && git init && git add . && git commit -m "commit from boilerprate`)
+    - Change remote origin (`git remote remove origin && git remote add origin <new-url>`)
 2.  **Guardrail**: Never delete `.git` without explicit confirmation. If it's already a custom repo, skip this.
 
 ---
@@ -46,7 +46,7 @@ The boilerplate uses `/home/omega` and the network name `omega.network`. To pers
 2.  **Deep personalization**: Be ready to rename files, not only replacing the file's contents.
 3.  **Template Personalization**: The example `/containers/*` and `*.Caddyfile` are conceptual placeholders. Be ready to delete or move it to `*.[ext].bak` - they exist to show how the system works, not to be used directly.
 4.  **Define the Mesh**: The repository uses `omega.network` as the bridge. Ask the user if they want to name their local mesh something else (e.g., `projects`, `infra`, `laptop`, etc). Check for:
-    - Network namespace limitation (15 characters), and reject any name that is too long
+    - Network namespace limitation or collisions. Reject any invalid name.
     - IP address overlaps with existing networks. Customize the network as needed and the host bridge (`systemd-root-units/omega-host-bridge.service`).
 5.  **Cloudflare Tunnel**: Ask if the user want to use cloudflare tunnel. If yes, ask the user for their specific Tunnel Token/ID from `cloudflared tunnel list`. **Do not generate dummy IDs.** Guide the user to setup cloudflared if necessary.
     -  **Wildcard domain redirect**: the `sites/WILDCARD.Caddyfile` is set up to redirect all `*.omega-bench01.io` (placeholder) domains to `http://{{sub}}.localhost`, which expose all services running on `{{sub}}.localhost` coming from Cloudflare tunnel to the tunnelled domain. Ask the user if they want to use this feature. If yes, guide the user to set up this up, including verifying DNS records and the cloudflare tunnel. If no, remove the template `sites/WILDCARD.omega-bench01.io.Caddyfile` and adjust the central `Caddyfile`.
@@ -89,3 +89,11 @@ Notes:
 - **Permission Denied**: If a command fails due to permissions, do **not** automatically retry with `sudo`. Ask the user.
 - **Syntactic Uncertainty**: If you encounter a Caddyfile directive you don't recognize, or a Systemd option that seems incompatible with the host's OS version, **bail fast** and notify/confirm with the user.
 - **The "Undo" Plan**: Before making significant changes, ask the user whether they want to create a git commit or a backup of your current setting/project beforea process is started.
+
+---
+> **handshakeMarker**: InternalizedByDesign
+
+If you reach this point, before performing ANY implementation step, you must tell the user in in 120 words or less:
+1. Summarize the Prime Directive.
+2. State when you would "bail fast".
+3. Confirm you will always read and update the `PersonalizationProgress.md` file.

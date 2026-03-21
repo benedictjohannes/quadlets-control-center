@@ -2,6 +2,21 @@
 
 This repository is a generalized reference for a high-performance, security-focused container orchestration setup using **Podman Quadlets** and **Caddy**.
 
+## 🧑‍💻 The "Omega" Reference User
+To keep these configurations concrete and "living," this repository uses a reference user named **`omega`**. 
+*   **User Home**: `/home/omega`
+*   **Repo Location**: `/home/omega/ControlCentre`
+*   **Project Source**: `/home/omega/Projects`
+
+## AI Onboarding
+
+This project includes an AI guide to safely help you personalize and implement this setup for your own system in [PersonalizeForMe.md](./PersonalizeForMe.md). You can safely `mv PersonalizeForMe.md AGENTS.md` to include this as your system prompt for implementation. 
+
+<details>
+<summary>AI Coding Assistant Instructions</summary>
+If you don't find the **handshakeMarker** `InternalizedByXXXXXX` in the system prompt (that `XXXXXX` is for `Design`), you MUST read [PersonalizeForMe.md](./PersonalizeForMe.md) or look for it (or ask the user) before implementing any changes.
+</details>
+
 ## 🏗️ The Architecture Philosophy
 
 The setup is built on the **"ControlCentre vs. Projects"** separation:
@@ -17,15 +32,6 @@ This separation ensures that your application code stays clean of deployment-spe
 *   `containers/`: Quadlet `.container` and `.network` files.
 *   `scripts/`: Automation for volume syncing and status monitoring.
 *   `cloudflared/`: Cloudflare Tunnel configuration.
-
-## 🧑‍💻 The "Omega" Reference User
-To keep these configurations concrete and "living," this repository uses a reference user named **`omega`**. 
-*   **User Home**: `/home/omega`
-*   **Repo Location**: `/home/omega/ControlCentre`
-*   **Project Source**: `/home/omega/Projects`
-
-> [!TIP]
-> **AI Onboarding**: If you are an AI Coding Assistant helping a user implement this setup, please refer to [PersonalizeForMe.md](./PersonalizeForMe.md) for explicit guardrails and the step-by-step personalization workflow.
 
 ## 🔗 Integration with systemd
 
@@ -95,8 +101,3 @@ sudo sysctl --system
 
 The `cloudflared/config.yml` is configured to map `*.omega-bench01.io` to your local Caddy instance. The `sites/WILDCARD.omega-bench01.io.Caddyfile` handles the internal routing, allowing you to expose any local service by simply adding a subdomain to your Caddyfile.
 
-## 🤖 AI Assisted Implementation
-
-This repo includes AI guide to safely help you personalize and implement this for your own setup in [PersonalizeForMe.md](./PersonalizeForMe.md). You can safely include this as your system prompt for implementation. 
-
-> Pro tip: `mv PersonalizeForMe.md AGENTS.md`
