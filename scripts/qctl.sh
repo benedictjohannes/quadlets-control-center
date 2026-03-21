@@ -3,7 +3,7 @@
 # qctl.sh: CLI tool to manage Quadlets
 # Central management for services Quadlet ran services.
 
-CONTAINER_DIR="/home/omega/.config/containers/systemd"
+CONTAINER_DIR="$HOME/.config/containers/systemd"
 
 usage() {
     echo "Usage: qctl [command] [name] [options]"
@@ -62,7 +62,7 @@ show_status() {
         SINCE="-"
         if [ "$ACTIVE_STATE" == "active" ]; then
             SINCE=$(echo "$PROPS" | grep "^ActiveEnterTimestamp=" | cut -d'=' -f2)
-            SINCE=$(echo "$SINCE" | sed 's/ [A-Z]\{3\}$//') # Remove timezone abbreviation like WIB/GMT
+            SINCE=$(echo "$SINCE" | sed 's/ [A-Z]\{3\}$//') # Remove timezone abbreviation
         fi
 
         # Extract Stats from our pre-fetched block
