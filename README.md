@@ -1,8 +1,18 @@
-# Omega ControlCentre: Rootless Caddy & Quadlet Stack
+# 🚀 Omega Control Center: Stop Memorizing Localhost Ports
 
-This repository is a generalized reference for a high-performance, security-focused container orchestration setup using **Podman Quadlets** and **Caddy**.
+Are you tired of **memorizing `localhost:3002`** for every project, or which project is running on that port?  
+Do you keep **forgetting which command** starts your project - is it `npm run start`, `bun dev`, or `make dev`?
 
-## 🧑‍💻 The "Omega" Reference User
+This **Omega Control Center** template provide ingredients to bootstrap your development environment into a production-grade local cloud that "just works" the moment you log in. Featuring:
+- **Containerized Deployment**: Run your project using Podman Quadlets. The very same system that powers orchestrated system like production k8s.
+- **Isolation**: Run your containers as rootless user for maximum security.
+- **Beautiful URLs**: Map `myProject.localhost` or `personalHobby.localhost` to your containers. No more port recall, courtesy of Caddy. And oh, caddy runs containerized, too.
+- **One Command to Rule Them All**: Stop juggling multiple terminals. Your projects are managed by `systemd`, meaning one command starts your entire stack (Backend + Frontend + DB).
+- **Session-Integrated**: Your projects start automatically with your user session. Boot your computer, login to your user, and your dev environment is already live.
+- **World accessible**: Expose your local services to the world using Cloudflare Tunnel. Showcase your dev progress in realtime without waiting 15 minutes for build pipeline to finish.
+- **Utility commands**: `qctl` script to help you manage your containers. Less typing `systemctl --user` or `journalctl --user`, more time to build cool stuff.
+
+## 🧑‍💻 The "omega" Reference User
 To keep these configurations concrete and "living," this repository uses a reference user named **`omega`**. 
 *   **User Home**: `/home/omega`
 *   **Repo Location**: `/home/omega/ControlCentre`
@@ -53,7 +63,7 @@ sudo systemctl enable --now omega-host-bridge.service
 ln -s /home/omega/ControlCentre/cloudflared /home/omega/.cloudflared
 
 # 4. Symlink management scripts to local bin (optional)
-ln -s /home/omega/ControlCentre/scripts/quadlets-status.sh ~/.local/bin/quadlets-status
+ln -s /home/omega/ControlCentre/scripts/qctl.sh ~/.local/bin/qctl
 ```
 
 

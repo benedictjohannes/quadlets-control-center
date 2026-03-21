@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# quadlets-status.sh: PM2-style status dashboard for Quadlet services
-# Author: Omega ControlCentre
+# qctl.sh: quadlets management helper script
 
 CONTAINER_DIR="/home/omega/.config/containers/systemd"
 
