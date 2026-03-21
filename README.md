@@ -81,7 +81,7 @@ A PM2-inspired CLI for managing Quadlet services. It streamlines `systemctl --us
 - **`qctl status`**: Displays a snapshot that shows CPU, Memory, Restarts, and Since (uptime). The **STARTUP** column indicates if the service is set to auto-start (via `WantedBy=`).
 - **`qctl enable | disable <name> [--now]`**: Toggles persistence by commenting/uncommenting `WantedBy=` lines in the `.container` file—necessary because standard `systemctl enable` doesn't apply to Quadlets. `--now` immediately starts or stops the service alongside enabling/disabling them.
 - **`qctl logs <name> [flags]`**: A smart `journalctl` wrapper that defaults to follow (`-f`) and accepts all standard journalctl arguments.
-- **`qctl start | stop | restart`**: Wraps `systemctl --user start | stop | restart`.
+- **`qctl start | stop | restart | reload`**: Wraps `systemctl --user start | stop | restart`. `reload` runs `daemon-reload` before restarting.
 
 ### 3. `scripts/caddy-https-warmup.sh`
 Warms up TLS certificates for all configured sites to ensure zero-latency first visits.

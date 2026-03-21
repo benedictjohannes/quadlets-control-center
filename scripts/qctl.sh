@@ -16,6 +16,7 @@ usage() {
     echo "  start <name>            Start a quadlet service"
     echo "  stop <name>             Stop a quadlet service"
     echo "  restart <name>          Restart a quadlet service"
+    echo "  reload <name>           Daemon-reload + Restart"
     echo ""
     echo "Enable/Disable:"
     echo "  enable <name> [--now]   Enable quadlet (uncomment WantedBy)"
@@ -109,13 +110,20 @@ case "$CMD" in
     status)
         show_status
         ;;
-    start|stop|restart)
+    start|stop|restart|reload)
         if [ -z "$NAME" ]; then
             echo "Error: Name required for $CMD"
             exit 1
         fi
-        echo "Executing: systemctl --user $CMD $NAME"
-        systemctl --user "$CMD" "$NAME"
+        if [ "$CMD" == "reload" ]; then
+            echo "Executing: systemctl --user daemon-reload"
+            systemctl --user daemon-reload
+            CMD_EXEC="restart"
+        else
+            CMD_EXEC="$CMD"
+        fi
+        echo "Executing: systemctl --user $CMD_EXEC $NAME"
+        systemctl --user "$CMD_EXEC" "$NAME"
         ;;
     enable)
         if [ -z "$NAME" ]; then
