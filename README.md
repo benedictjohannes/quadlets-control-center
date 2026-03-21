@@ -24,7 +24,7 @@ This project includes an AI guide to safely help you personalize and implement t
 
 <details>
 <summary>AI Coding Assistant Instructions</summary>
-If you don't find the **handshakeMarker** `InternalizedByXXXXXX` in the system prompt (that `XXXXXX` is for `Design`), you MUST read [PersonalizeForMe.md](./PersonalizeForMe.md) or look for it (or ask the user) before implementing any changes.
+If you don't find the **handshakeMarker** `InternalizedByXXXXXX` in the system prompt (that `XXXXXX` is for `Design`), you MUST read [PersonalizeForMe.md](./PersonalizeForMe.md), look for it, or ask the user before implementing any changes in helping the user implementing this project in their system.
 </details>
 
 ## 🏗️ The Architecture Philosophy
