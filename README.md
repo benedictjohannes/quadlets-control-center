@@ -69,22 +69,21 @@ ln -s /home/omega/ControlCentre/scripts/qctl.sh ~/.local/bin/qctl
 
 ## 🛠️ Key Management Tools
 
-### 1. `scripts/caddy-sync-volumes.sh`
-A security-focused script that ensures Caddy only has access to the specific folders it needs.
-- **Precision Mounting**: Scans Caddyfiles for `/srv/...` paths and generates explicit `Volume=` entries in `caddy.container`.
-- **Static/Proxy Toggling**: Recognizes commented-out `root` paths, allowing you to "toggle" between static serving and reverse proxying by just editing Caddyfiles.
-- **Why?** Avoids the "Mega-Mount" security hole where Caddy can see your entire user directory.
-
-### 2. `scripts/qctl.sh`
+### 1. `scripts/qctl.sh`
 A PM2-inspired CLI for managing Quadlet services. It streamlines `systemctl --user` boilerplate and provides a centralized dashboard.
 
-- **`qctl status`**: Displays a snapshot that shows CPU, Memory, Restarts, and Since (uptime). The **STARTUP** column indicates if the service is set to auto-start (via `WantedBy=`).
+- **`qctl status`**: Shows current process list and CPU, Memory, Restarts, and Since (uptime) metrics. The **STARTUP** column indicates if the service is set to auto-start (via `WantedBy=`).
 - **`qctl enable | disable <name> [--now]`**: Toggles persistence by commenting/uncommenting `WantedBy=` lines in the `.container` file—necessary because standard `systemctl enable` doesn't apply to Quadlets. `--now` immediately starts or stops the service alongside enabling/disabling them.
 - **`qctl logs <name> [flags]`**: A smart `journalctl` wrapper that defaults to follow (`-f`) and accepts all standard journalctl arguments.
 - **`qctl start | stop | restart | reload`**: Wraps `systemctl --user start | stop | restart`. `reload` runs `daemon-reload` before restarting.
 
+### 2. `scripts/caddy-sync-volumes.sh`
+A script to help that ensure Caddy container only has access to the specific folders it needs to avoid security hole where Caddy can see entire your entire project/homedir.
+- **Precision Mounting**: Scans Caddyfiles for `/srv/...` paths and generates explicit `Volume=` entries in `caddy.container`.
+- **Static/Proxy Toggling**: Recognizes commented-out `root` paths, allowing you to "toggle" between static serving and reverse proxying by just editing Caddyfiles.
+
 ### 3. `scripts/caddy-https-warmup.sh`
-Warms up TLS certificates for all configured sites to ensure zero-latency first visits.
+Warms up Caddy's TLS certificates for all configured sites to ensure zero-latency first visits.
 
 ## 🚀 "Hub and Spoke" Project Pattern
 
