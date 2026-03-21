@@ -23,8 +23,9 @@ To keep these configurations concrete and "living," this repository uses a refer
 *   **User Home**: `/home/omega`
 *   **Repo Location**: `/home/omega/ControlCentre`
 *   **Project Source**: `/home/omega/Projects`
+
 > [!TIP]
-> **Getting Started**: Find and replace `/home/omega` with your own home path throughout the repository. This includes Caddyfiles, scripts, and systemd units.
+> **AI Onboarding**: If you are an AI Coding Assistant helping a user implement this setup, please refer to [PersonalizeForMe.md](./PersonalizeForMe.md) for explicit guardrails and the step-by-step personalization workflow.
 
 ## 🔗 Integration with systemd
 
@@ -34,16 +35,21 @@ To integrate this "ControlCentre" into your Linux system while keeping everythin
 # 1. Symlink Quadlets and User Units to systemd user path
 ln -s /home/omega/ControlCentre/containers ~/.config/containers/systemd
 ln -s /home/omega/ControlCentre/systemd-user-units/* ~/.config/systemd/user/
+systemctl --user daemon-reload
 
-# 2. Symlink Root Units (requires sudo)
-sudo ln -s /home/omega/ControlCentre/systemd-root-units/* /etc/systemd/system/
+# 2. Copy Root Units (requires sudo)
+# Symlink is safe only if the homedir resides in the same partition
+sudo cp /home/omega/ControlCentre/systemd-root-units/* /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now omega-host-bridge.service
 
-# 3. Symlink Cloudflare config
+# 3. Symlink Cloudflare config for user ran cloudflared
 ln -s /home/omega/ControlCentre/cloudflared /home/omega/.cloudflared
 
 # 4. Symlink management scripts to local bin (optional)
 ln -s /home/omega/ControlCentre/scripts/quadlets-status.sh ~/.local/bin/quadlets-status
 ```
+
 
 ## 🛠️ Key Management Tools
 
@@ -88,3 +94,9 @@ sudo sysctl --system
 ## ☁️ Bonus: Exposing *.localhost to the world using Cloudflare Tunnel
 
 The `cloudflared/config.yml` is configured to map `*.omega-bench01.io` to your local Caddy instance. The `sites/WILDCARD.omega-bench01.io.Caddyfile` handles the internal routing, allowing you to expose any local service by simply adding a subdomain to your Caddyfile.
+
+## 🤖 AI Assisted Implementation
+
+This repo includes AI guide to safely help you personalize and implement this for your own setup in [PersonalizeForMe.md](./PersonalizeForMe.md). You can safely include this as your system prompt for implementation. 
+
+> Pro tip: `mv PersonalizeForMe.md AGENTS.md`
