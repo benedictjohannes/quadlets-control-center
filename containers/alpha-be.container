@@ -1,0 +1,41 @@
+[Unit]
+Description=Alpha Backend (Go)
+After=network-online.target postgres.service
+Requires=postgres.service
+Wants=alpha-fe.service
+
+[Container]
+ContainerName=alpha-be
+Image=docker.io/library/ubuntu:latest
+WorkingDir=/home/omega/Projects/Alpha/backend
+Network=omega.network
+UserNS=keep-id
+
+# 1. Source Code
+Volume=/home/omega/Projects/Alpha/backend:/home/omega/Projects/Alpha/backend:Z
+
+# 2. Uses Go installed on host (for extreme build speeds)
+# Mount host's GOROOT as /usr/local/go
+Volume=/usr/local/go:/usr/local/go:ro,Z
+# Mount host's GOPATH to /home/omega/go
+Volume=/home/omega/go:/home/omega/go:Z
+# Mount host's GOCACHE to its host location
+Volume=/home/omega/.cache/go-build:/home/omega/.cache/go-build:Z
+
+# Environment for Go Toolchain
+Environment=PATH=/usr/local/go/bin:/home/omega/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=GOPATH=/home/omega/go
+Environment=GOCACHE=/home/omega/.cache/go-build
+
+# App Specific
+Environment=DB_HOST=postgres
+Environment=PORT=3000
+
+# Using 'gow' which should be in /home/omega/go/bin for watcher support
+Exec=gow run .
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

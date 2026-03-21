@@ -1,0 +1,14 @@
+# user systemd service unit
+
+[Unit]
+Description=Caddy HTTPS Warmup Service
+After=network.target caddy.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/omega/ControlCentre/scripts/caddy-https-warmup.sh
+User=omega
+Group=omega
+
+[Install]
+WantedBy=default.target

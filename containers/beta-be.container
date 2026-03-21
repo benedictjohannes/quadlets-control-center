@@ -1,0 +1,24 @@
+[Unit]
+Description=Beta Backend (Bun)
+After=network-online.target postgres.service
+
+[Container]
+ContainerName=beta-be
+Image=docker.io/oven/bun:latest
+WorkingDir=/app
+Network=omega.network
+UserNS=keep-id
+
+# Source Code
+Volume=/home/omega/Projects/Beta/backend:/app:Z
+
+# App Specific
+Environment=PORT=3001
+
+Exec=bun run index.ts
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,19 @@
+# Beta Project (beta.localhost and beta.omega-bench01.io)
+# Demonstrates a single-service project with static frontend + API backend
+
+beta.localhost, http://beta.localhost {
+	import manual_https_redirect
+	tls internal
+
+	# API handles - Reverse proxy to the Bun backend container
+	handle /api/* {
+		reverse_proxy beta-be:3001
+	}
+
+	# Static frontend (scanned by caddy-sync-volumes.sh)
+	handle {
+		root * /srv/Beta/frontend/dist
+		file_server
+		try_files {path} {path}.html {path}/index.html index.html
+	}
+}

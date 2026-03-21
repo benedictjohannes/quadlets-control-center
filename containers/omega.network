@@ -1,0 +1,5 @@
+[Network]
+NetworkName=omega.network
+IPAMDriver=host-local
+Internal=false
+Subnet=10.10.30.0/24

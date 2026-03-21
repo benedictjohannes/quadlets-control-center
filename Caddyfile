@@ -1,0 +1,20 @@
+# Omega ControlCentre Caddyfile
+
+{
+	# Rootless binding (requires net.ipv4.ip_unprivileged_port_start=80)
+	http_port 80
+	https_port 443
+}
+
+(manual_https_redirect) {
+	# Logic: Redirect from HTTP to HTTPS unless the request comes from the tunnel.
+	# The Cloudflare Tunnel logic sets the 'X-Is-Tunnel' header.
+	@needs_https_redir {
+		not header X-Is-Tunnel true
+		protocol http
+	}
+	redir @needs_https_redir https://{host}{uri} 308
+}
+
+# Import all site configurations
+import sites/*.Caddyfile

@@ -1,0 +1,21 @@
+[Container]
+Image=docker.io/library/caddy:latest
+ContainerName=caddy
+PublishPort=80:80
+PublishPort=443:443
+Network=omega.network
+UserNS=keep-id
+Entrypoint=caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+
+# Persistence
+Volume=/home/omega/ControlCentre/Caddyfile:/etc/caddy/Caddyfile:ro,Z
+Volume=/home/omega/ControlCentre/sites:/etc/caddy/sites:ro,Z
+Volume=/home/omega/.local/share/caddy:/data:Z
+Volume=/home/omega/.config/caddy:/config:Z
+
+# BEGIN_VOLUMES
+# This block is automatically updated by caddy-sync-volumes.sh
+# END_VOLUMES
+
+[Install]
+WantedBy=default.target

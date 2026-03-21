@@ -1,0 +1,29 @@
+# Project Alpha (Go Backend + Node Frontend)
+# Demonstrates "Hub & Spoke" pattern + "Static/Proxy Toggle" pattern
+
+(alphaFEProxied) {
+	# Use this during active development (Vite dev server)
+	reverse_proxy alpha-fe:5173
+}
+
+(alphaFEStatic) {
+	# Use this for production-like testing of built assets
+	# Scanned by caddy-sync-volumes.sh to auto-map /home/omega/Projects/Alpha/frontend/dist
+	root * /srv/Alpha/frontend/dist
+	file_server
+	try_files {path} {path}.html {path}/index.html index.html
+}
+
+alpha.localhost, http://alpha.localhost {
+	import manual_https_redirect
+	tls internal
+
+	# API handles
+	handle /api/* {
+		reverse_proxy alpha-be:3000
+	}
+
+	# Frontend (toggle between Static or Proxied)
+	import alphaFEProxied
+	# import alphaFEStatic
+}

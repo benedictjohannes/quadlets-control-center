@@ -1,0 +1,24 @@
+[Unit]
+Description=Alpha Frontend (Node/Vite)
+After=alpha-be.service
+PartOf=alpha-be.service
+
+[Container]
+ContainerName=alpha-fe
+Image=docker.io/library/node:24-slim
+WorkingDir=/home/omega/Projects/Alpha/frontend
+Network=omega.network
+UserNS=keep-id
+
+# Environment
+Environment=BACKEND_URL=http://alpha-be:3000
+
+# Mounts
+Volume=/home/omega/Projects/Alpha/frontend:/home/omega/Projects/Alpha/frontend:Z
+
+# Vite requires --host to be reachable via the gateway
+Exec=npm run dev -- --host 0.0.0.0
+
+[Install]
+# Inherit lifestyle from backend
+WantedBy=alpha-be.service

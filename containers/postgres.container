@@ -1,0 +1,13 @@
+[Container]
+Image=docker.io/library/postgres:16-alpine
+ContainerName=postgres
+Environment=POSTGRES_PASSWORD=password
+Network=omega.network
+UserNS=keep-id
+
+# Security: Persist data in the user's home directory (assumed to be LUKS encrypted)
+Volume=/home/omega/.pgsql:/var/lib/postgresql/data:Z
+
+[Install]
+# Optional: Enable if you want Postgres to always run
+# WantedBy=default.target

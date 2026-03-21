@@ -1,0 +1,17 @@
+# root systemd unit
+
+[Unit]
+Description=Setup Dummy Network Interface (omega-host-pt) for Container-to-Host Proxying
+After=network.target
+
+[Service]
+Type=oneshot
+# Creates a 'dummy' interface at 10.10.20.20
+# This allows containers to reach host-native services (like a database) outside the network
+ExecStartPre=-/usr/sbin/ip link add omega-host-pt type dummy
+ExecStart=/usr/sbin/ip addr add 10.10.20.20/32 dev omega-host-pt
+ExecStartPost=/usr/sbin/ip link set omega-host-pt up
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+# user systemd timer unit
+
+[Unit]
+Description=Run Caddy HTTPS Warmup every 2 hours
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=2h
+Unit=omega-https-warmup.service
+
+[Install]
+WantedBy=timers.target

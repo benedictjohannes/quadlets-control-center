@@ -1,0 +1,13 @@
+# Cloudflare Tunnel Configuration
+tunnel: 00000000-0000-0000-0000-000000000000
+credentials-file: /home/omega/.cloudflared/00000000-0000-0000-0000-000000000000.json
+
+ingress:
+  # Map all subdomains to the local Caddy instance
+  - hostname: "*.omega-bench01.io"
+    service: http://localhost:80
+    originRequest:
+      # noTLSVerify: true # Uncomment if using internal self-signed TLS
+
+  # Catch-all 404
+  - service: http_status:404
