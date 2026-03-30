@@ -7,6 +7,13 @@ Network=omega.network
 UserNS=keep-id
 Entrypoint=caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
 
+# 🔑 SSL/TLS Certificate Mounting
+# Mount host certificates to solve TLS errors/propagate host trust if needed.
+# Note: Mount both source & symlink target (paths vary by distro).
+# Volume=/etc/ssl/certs:/etc/ssl/certs:ro
+# Volume=/etc/pki/ca-trust:/etc/pki/ca-trust:ro
+# Volume=/etc/ca-certificates:/etc/ca-certificates:ro
+
 # Persistence
 Volume=/home/omega/ControlCentre/Caddyfile:/etc/caddy/Caddyfile:ro,Z
 Volume=/home/omega/ControlCentre/sites:/etc/caddy/sites:ro,Z

@@ -110,6 +110,33 @@ echo "net.ipv4.ip_unprivileged_port_start=80" | sudo tee /etc/sysctl.d/99-rootle
 sudo sysctl --system
 ```
 
+## 🔒 Local HTTPS (Trusting Caddy's Root CA)
+
+Since Caddy runs inside a container, its internal Certificate Authority (CA) used to sign `.localhost` certificates must be trusted by your **host system** to avoid browser warnings and TLS errors in development scripts.
+
+> [!NOTE]
+> The root CA certificate is generated only **after Caddy starts for the first time**. Ensure the `caddy` service is running before attempting to locate the file.
+
+1.  **Locate the Root Certificate**:
+    Caddy's root certificate is persisted on the host via volume mount at:
+    `/home/omega/.local/share/caddy/pki/authorities/local/root.crt`
+
+2.  **Trust the Certificate on the Host** (CachyOS/Arch Example):
+    ```bash
+    # Install the certificate as a trusted anchor
+    sudo trust anchor /home/omega/.local/share/caddy/pki/authorities/local/root.crt
+    ```
+    *Note: For other distros like Fedora, copy to `/etc/pki/ca-trust/source/anchors/` and run `update-ca-trust`.*
+
+3.  **Warming up Certificates**:
+    Ensure the `omega-https-warmup.timer` is enabled to periodically trigger certificate generation for all configured sites:
+    ```bash
+    systemctl --user enable --now omega-https-warmup.timer
+    ```
+
+> [!TIP]
+> **Browsers & Curl**: Installing the certificate host-wide works for `curl`, OpenSSL, and most applications. For **Firefox**, you may need to manually import the `root.crt` into the browser's certificate manager or set `security.enterprise_roots.enabled` to `true` in `about:config`.
+
 ## ☁️ Bonus: Exposing *.localhost to the world using Cloudflare Tunnel
 
 The `cloudflared/config.yml` is configured to map `*.omega-bench01.io` to your local Caddy instance. The `sites/WILDCARD.omega-bench01.io.Caddyfile` handles the internal routing, allowing you to expose any local service by simply adding a subdomain to your Caddyfile.

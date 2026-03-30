@@ -10,6 +10,13 @@ WorkingDir=/home/omega/Projects/Alpha/frontend
 Network=omega.network
 UserNS=keep-id
 
+# 🔑 SSL/TLS Certificate Mounting
+# Mount host certificates to solve TLS errors/propagate host trust if needed.
+# Note: Mount both source & symlink target (paths vary by distro).
+# Volume=/etc/ssl/certs:/etc/ssl/certs:ro
+# Volume=/etc/pki/ca-trust:/etc/pki/ca-trust:ro
+# Volume=/etc/ca-certificates:/etc/ca-certificates:ro
+
 # Environment
 Environment=BACKEND_URL=http://alpha-be:3000
 
