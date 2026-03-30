@@ -3,3 +3,8 @@ NetworkName=omega.network
 IPAMDriver=host-local
 Internal=false
 Subnet=10.10.30.0/24
+# Default MTU is often set to 65520 to optimize container-to-container communication.
+# However, this can cause packets to be dropped when traversing the public internet.
+# - Use 1500 for standard internet connectivity.
+# - Use 1280 (IPv6 minimum) if using Tunnels (Cloudflare, Wireguard) to avoid fragmentation.
+#Options=mtu=1280
