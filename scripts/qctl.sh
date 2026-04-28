@@ -37,7 +37,7 @@ show_status() {
     fi
 
     # Fetch all podman stats at once for performance
-    TEMP_STATS=$(podman stats --no-stream --format "{{.Name}}|{{.CPUPerc}}|{{.MemUsage}}" "${SERVICES[@]}" 2>/dev/null)
+    TEMP_STATS=$(podman stats --no-stream --format "{{.Name}}|{{.CPUPerc}}|{{.MemUsage}}" 2>/dev/null)
 
     # Print Header
     printf "\033[1m%-25s %-10s %-10s %-10s %-10s %-12s %-20s\033[0m\n" "SERVICE" "STATUS" "STARTUP" "RESTARTS" "CPU %" "MEM" "SINCE"
